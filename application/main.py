@@ -1,4 +1,12 @@
 import os
+import sys
+from pathlib import Path
+
+# Ensure the root directory containing 'application' is on sys.path
+root_dir = str(Path(__file__).resolve().parent.parent)
+if root_dir not in sys.path:
+    sys.path.insert(0, root_dir)
+
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware

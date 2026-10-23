@@ -11,11 +11,11 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY application/ ./application/
 
-WORKDIR /app/application
+ENV PYTHONPATH=/app
 
 RUN useradd -m -u 1001 ctfuser && chown -R ctfuser:ctfuser /app
 USER ctfuser
 
 EXPOSE 8000
 
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["sh", "-c", "uvicorn application.main:app --host 0.0.0.0 --port ${PORT:-8000}"]
