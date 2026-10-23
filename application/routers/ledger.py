@@ -1,25 +1,22 @@
-from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-from database import get_db
-from services.channel_service import get_channel
-from services.ledger_service import get_channel_journals, search_channel_journals
+from application.database import get_db
+from application.core.security import get_current_solver
+from application.models.account import SolverAccount
+from application.services.ledger_service import list_ledger_entries, get_ledger_summary
 
-router = APIRouter(prefix="/api/ledger", tags=["Ledger"])
+router = APIRouter(prefix="/ledger", tags=["Ledger"])
 
-@router.get("/journal")
-def get_journal_endpoint(channel_id: str = Query(...), db: Session = Depends(get_db)):
-    channel = get_channel(db, channel_id)
-    if not channel:
-        raise HTTPException(status_code=404, detail="Channel not found in registry")
-    return get_channel_journals(db, channel_id)
-
-@router.get("/search")
-def search_journal_endpoint(
-    channel_id: str = Query(...),
-    q: str = Query(...),
+@router.get("")
+def get_entries(
+    current_solver: SolverAccount = Depends(get_current_solver),
     db: Session = Depends(get_db)
 ):
-    channel = get_channel(db, channel_id)
-    if not channel:
-        raise HTTPException(status_code=404, detail="Channel not found in registry")
-    return search_channel_journals(db, channel_id, q)
+    return list_ledger_entries(db, current_solver.account_id)
+
+@router.get("/summary")
+def get_summary(
+    current_solver: SolverAccount = Depends(get_current_solver),
+    db: Session = Depends(get_db)
+):
+    return get_ledger_summary(db, current_solver)

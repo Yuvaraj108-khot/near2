@@ -1,16 +1,39 @@
 import secrets
-import hashlib
+from fastapi import Header, HTTPException, status, Depends
+from sqlalchemy.orm import Session
+from application.database import get_db
 
-def generate_channel_id() -> str:
-    return "chn_" + secrets.token_hex(12)
+def generate_solver_token() -> str:
+    return f"slv_sec_{secrets.token_hex(20)}"
 
-def derive_earmark_ticket(channel_id: str, cycle_number: int, instruction_ref: str) -> str:
-    raw = f"{channel_id}:{cycle_number}:{instruction_ref}:{secrets.token_hex(8)}"
-    return "TCK-" + hashlib.sha256(raw.encode('utf-8')).hexdigest()[:24].upper()
+def get_current_solver(
+    authorization: str = Header(None),
+    x_solver_token: str = Header(None),
+    db: Session = Depends(get_db)
+):
+    token = None
+    if authorization:
+        parts = authorization.split()
+        if len(parts) == 2 and parts[0].lower() == "bearer":
+            token = parts[1]
+        else:
+            token = authorization
+    elif x_solver_token:
+        token = x_solver_token
 
-def derive_clearance_voucher(ticket: str) -> str:
-    raw = f"VOUCHER:{ticket}:{secrets.token_hex(8)}"
-    return "VCHR-" + hashlib.sha256(raw.encode('utf-8')).hexdigest()[:24].upper()
+    if not token:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Missing solver authorization token. Provide 'Authorization: Bearer <token>' or 'X-Solver-Token'."
+        )
 
-def compute_integrity_checksum(data: str) -> str:
-    return hashlib.sha256(data.encode('utf-8')).hexdigest()
+    # Delay import of SolverAccount to avoid circular import
+    from application.models.account import SolverAccount
+    account = db.query(SolverAccount).filter(SolverAccount.token == token).first()
+    if not account:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid or expired solver token."
+        )
+
+    return account

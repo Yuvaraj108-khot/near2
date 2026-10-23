@@ -1,23 +1,20 @@
 import os
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
-from database import init_db
-from config import APP_NAME, PROTOCOL_VERSION
+from application.database import engine, Base
+from application.config import settings
 
-from routers.channel import router as channel_router
-from routers.pipeline import router as pipeline_router
-from routers.receipts import router as receipts_router
-from routers.ledger import router as ledger_router
-from routers.reconciliation import router as reconciliation_router
-from routers.instructions import router as instructions_router
-from routers.directory import router as directory_router
+# Import models so Base registers them
+import application.models
+
+# Create tables
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
-    title=APP_NAME,
-    description="Institutional Clearing Gateway implementing the Concentric Saptaratha Settlement Architecture",
-    version=PROTOCOL_VERSION
+    title=settings.APP_NAME,
+    description="Algorithmic solver clearinghouse and multi-stage settlement execution gateway.",
+    version="2.4.0"
 )
 
 app.add_middleware(
@@ -28,34 +25,40 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Initialize database schema
-init_db()
+# Include API routers
+from application.routers import (
+    account,
+    orders,
+    quotes,
+    settlements,
+    receipts,
+    ledger,
+    reconciliation
+)
 
-# Register API Routers
-app.include_router(channel_router)
-app.include_router(pipeline_router)
-app.include_router(receipts_router)
-app.include_router(ledger_router)
-app.include_router(reconciliation_router)
-app.include_router(instructions_router)
-app.include_router(directory_router)
+app.include_router(account.router, prefix=settings.API_PREFIX)
+app.include_router(orders.router, prefix=settings.API_PREFIX)
+app.include_router(quotes.router, prefix=settings.API_PREFIX)
+app.include_router(settlements.router, prefix=settings.API_PREFIX)
+app.include_router(receipts.router, prefix=settings.API_PREFIX)
+app.include_router(ledger.router, prefix=settings.API_PREFIX)
+app.include_router(reconciliation.router, prefix=settings.API_PREFIX)
 
-# Static files & Web UI
-STATIC_DIR = os.path.join(os.path.dirname(__file__), "static")
-app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
-
-@app.get("/")
-def serve_index():
-    return FileResponse(os.path.join(STATIC_DIR, "index.html"))
-
-@app.get("/api/health")
-def health_check():
+@app.get("/api/status")
+def system_status():
     return {
         "status": "OPERATIONAL",
-        "protocol": PROTOCOL_VERSION,
-        "engine": "Vyūha Clearing Engine v4.2"
+        "service": settings.APP_NAME,
+        "engine_version": "v2.4.0",
+        "statutory_compliance_tier": "STANDARD_SUPERVISORY",
+        "settlement_window": "ACTIVE"
     }
+
+# Mount static files
+static_dir = os.path.join(os.path.dirname(__file__), "static")
+if os.path.exists(static_dir):
+    app.mount("/", StaticFiles(directory=static_dir, html=True), name="static")
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=False)
+    uvicorn.run("application.main:app", host="0.0.0.0", port=8000, reload=True)
