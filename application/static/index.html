@@ -1,67 +1,174 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CHAKRAVYUH // Sovereign Settlement Gateway</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        chakra: {
+                            gold: '#f59e0b',
+                            goldLight: '#fbbf24',
+                            goldDark: '#b45309',
+                            obsidian: '#070a12',
+                            panel: 'rgba(13, 19, 33, 0.75)',
+                            border: 'rgba(51, 65, 85, 0.45)',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Cinzel', 'serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/style.css">
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen">
+<body class="bg-chakra-obsidian text-slate-100 min-h-screen flex flex-col antialiased selection:bg-amber-500/30 selection:text-amber-200">
+    
     <!-- Top Sovereign Navigation Banner -->
-    <header class="border-b border-amber-900/30 bg-slate-900/80 backdrop-blur sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex flex-wrap justify-between items-center gap-4">
-            <div class="flex items-center space-x-4">
-                <div class="w-10 h-10 rounded-full border border-amber-500/50 flex items-center justify-center bg-amber-950/40 shadow-inner shadow-amber-500/20">
-                    <span class="text-amber-400 font-serif font-bold text-lg">⚙</span>
+    <header class="border-b border-amber-900/30 bg-slate-950/80 backdrop-blur-md sticky top-0 z-40 transition-all">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-wrap justify-between items-center gap-4">
+            <div class="flex items-center space-x-3.5">
+                <!-- Chakra Symbol -->
+                <div class="relative w-10 h-10 rounded-full border border-amber-500/60 flex items-center justify-center bg-gradient-to-br from-amber-950/60 to-slate-900 shadow-lg shadow-amber-500/10">
+                    <svg class="w-6 h-6 text-amber-400 animate-spin" style="animation-duration: 25s;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+                        <circle cx="12" cy="12" r="10" stroke-opacity="0.3"></circle>
+                        <circle cx="12" cy="12" r="6" stroke-dasharray="3 3"></circle>
+                        <circle cx="12" cy="12" r="2"></circle>
+                        <line x1="12" y1="2" x2="12" y2="6"></line>
+                        <line x1="12" y1="18" x2="12" y2="22"></line>
+                        <line x1="2" y1="12" x2="6" y2="12"></line>
+                        <line x1="18" y1="12" x2="22" y2="12"></line>
+                    </svg>
                 </div>
                 <div>
-                    <h1 class="text-xl font-serif font-bold tracking-widest text-amber-200">CHAKRAVYUH</h1>
-                    <p class="text-xs text-amber-500/80 tracking-wider">SOVEREIGN SETTLEMENT GATEWAY // VYŪHA ENGINE v4.2</p>
+                    <div class="flex items-center gap-2">
+                        <h1 class="text-lg font-serif font-bold tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-amber-400 to-amber-200">CHAKRAVYUH</h1>
+                        <span class="text-[10px] bg-amber-500/10 text-amber-400 border border-amber-500/30 font-mono px-2 py-0.5 rounded-full uppercase tracking-wider">v4.2 PROT</span>
+                    </div>
+                    <p class="text-[11px] text-amber-500/70 tracking-wider font-mono">SOVEREIGN INTER-INSTITUTION CLEARINGHOUSE</p>
                 </div>
             </div>
-            <div class="flex items-center space-x-6 text-sm">
-                <div class="flex items-center space-x-2">
-                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                    <span class="text-xs text-slate-400 uppercase tracking-wider">Network: <strong class="text-slate-200">Mainnet Sovereign Ring</strong></span>
+
+            <div class="flex items-center space-x-4 text-xs font-mono">
+                <div class="hidden sm:flex items-center space-x-2 bg-slate-900/90 border border-slate-800 rounded-lg px-3 py-1.5">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span class="text-slate-400">Ring Network: <strong class="text-slate-200">Mainnet Tier-1</strong></span>
                 </div>
-                <div class="bg-slate-800/80 border border-slate-700/60 rounded px-3 py-1 text-xs">
+                <div class="bg-amber-950/30 border border-amber-500/30 rounded-lg px-3 py-1.5">
                     <span class="text-slate-400">Authority: </span>
-                    <span class="font-mono text-amber-300">VAULT-CHAKRA-PRIME</span>
+                    <span class="font-mono text-amber-300 font-semibold">VAULT-CHAKRA-PRIME</span>
                 </div>
             </div>
         </div>
     </header>
 
-    <main class="max-w-7xl mx-auto px-6 py-8 space-y-8">
-        <!-- Telemetry Row: Channel Handle & Liquidity Overview -->
-        <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <!-- Active Channel Card -->
-            <div class="card p-6 border border-slate-800 rounded-xl bg-slate-900/50 space-y-4">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 flex-1 w-full">
+        
+        <!-- Primary Telemetry Row: Channel, Visual Radar, & Liquidity Pool -->
+        <section class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+            
+            <!-- Participant Channel Card (4 cols) -->
+            <div class="lg:col-span-4 glass-panel rounded-2xl p-6 flex flex-col justify-between space-y-5">
                 <div class="flex justify-between items-center">
-                    <span class="text-xs font-semibold tracking-wider text-slate-400 uppercase">Participant Channel</span>
-                    <span id="stage-badge" class="badge badge-idle">IDLE</span>
+                    <div class="flex items-center space-x-2">
+                        <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+                        <span class="text-xs font-bold uppercase tracking-wider text-slate-300">Clearing Channel</span>
+                    </div>
+                    <span id="stage-badge" class="px-2.5 py-1 rounded-full text-[11px] font-bold font-mono tracking-wider bg-slate-800 text-slate-300 border border-slate-700">IDLE</span>
                 </div>
-                <div>
-                    <div class="text-xs text-slate-400">Active Handle:</div>
-                    <div id="channel-id-display" class="font-mono text-sm text-amber-300 break-all select-all">Uninitialized</div>
+
+                <div class="space-y-1.5">
+                    <div class="text-[11px] text-slate-400 font-medium">Channel Handle</div>
+                    <div id="channel-id-display" class="font-mono text-sm text-amber-300 bg-slate-950/80 border border-slate-800 rounded-lg p-2.5 break-all select-all flex items-center justify-between">
+                        <span>Uninitialized</span>
+                    </div>
                 </div>
-                <div class="flex justify-between items-center text-xs text-slate-400 border-t border-slate-800/80 pt-3">
-                    <span>Clearing Cycle: <strong id="cycle-display" class="text-slate-200 font-mono">1</strong></span>
-                    <span>Channel Units: <strong id="balance-display" class="text-emerald-400 font-mono">0.00 SDR</strong></span>
+
+                <div class="grid grid-cols-2 gap-3 pt-2 border-t border-slate-800/80">
+                    <div class="bg-slate-950/50 p-3 rounded-xl border border-slate-800/60">
+                        <div class="text-[11px] text-slate-400">Cycle Number</div>
+                        <div id="cycle-display" class="text-lg font-bold font-mono text-slate-100 mt-0.5">1</div>
+                    </div>
+                    <div class="bg-slate-950/50 p-3 rounded-xl border border-slate-800/60">
+                        <div class="text-[11px] text-slate-400">Channel Balance</div>
+                        <div id="balance-display" class="text-lg font-bold font-mono text-emerald-400 mt-0.5">0.00 SDR</div>
+                    </div>
                 </div>
-                <div class="flex gap-2">
-                    <button id="btn-open-channel" class="btn btn-primary w-full text-xs py-2">Open New Channel</button>
-                    <button id="btn-refresh" class="btn btn-secondary text-xs px-3">↺</button>
+
+                <div class="flex gap-2 pt-2">
+                    <button id="btn-open-channel" class="btn-gold flex-1 py-2.5 px-4 rounded-xl text-xs flex items-center justify-center gap-2">
+                        <span>⚡</span> Open New Channel
+                    </button>
+                    <button id="btn-refresh" class="btn-dark p-2.5 rounded-xl text-xs flex items-center justify-center" title="Refresh Telemetry">
+                        ↺
+                    </button>
                 </div>
             </div>
 
-            <!-- Treasury Liquidity Pool Card -->
-            <div class="card p-6 border border-slate-800 rounded-xl bg-slate-900/50 space-y-4 md:col-span-2">
+            <!-- Concentric Ring Radar Visualizer (4 cols) -->
+            <div class="lg:col-span-4 glass-panel rounded-2xl p-6 flex flex-col items-center justify-center relative overflow-hidden">
+                <div class="w-full flex justify-between items-center mb-2 z-10">
+                    <span class="text-xs font-bold uppercase tracking-wider text-slate-300">Concentric Ring Radar</span>
+                    <span id="radar-status-label" class="text-[11px] font-mono text-amber-400">Ring I Standby</span>
+                </div>
+
+                <!-- SVG Chakravyuh Radar Graphic -->
+                <div class="relative w-48 h-48 my-auto flex items-center justify-center">
+                    <svg class="w-full h-full" viewBox="0 0 200 200">
+                        <!-- Background Grid -->
+                        <line x1="100" y1="10" x2="100" y2="190" stroke="#334155" stroke-opacity="0.3" stroke-width="1"></line>
+                        <line x1="10" y1="100" x2="190" y2="100" stroke="#334155" stroke-opacity="0.3" stroke-width="1"></line>
+
+                        <!-- Outer Ring IV: Finality -->
+                        <circle id="radar-ring-4" class="radar-ring" cx="100" cy="100" r="85" stroke="#475569" stroke-width="2"></circle>
+                        <!-- Ring III: Disbursement -->
+                        <circle id="radar-ring-3" class="radar-ring" cx="100" cy="100" r="65" stroke="#475569" stroke-width="2"></circle>
+                        <!-- Ring II: Earmark -->
+                        <circle id="radar-ring-2" class="radar-ring" cx="100" cy="100" r="45" stroke="#475569" stroke-width="2"></circle>
+                        <!-- Inner Ring I: Intake -->
+                        <circle id="radar-ring-1" class="radar-ring active" cx="100" cy="100" r="25" stroke="#f59e0b" stroke-width="2.5"></circle>
+
+                        <!-- Rotating Scanning Needle -->
+                        <g class="radar-rotating">
+                            <line x1="100" y1="100" x2="100" y2="15" stroke="url(#radarGradient)" stroke-width="1.5"></line>
+                        </g>
+
+                        <!-- Center Vault Core -->
+                        <circle cx="100" cy="100" r="9" fill="#f59e0b" filter="drop-shadow(0 0 6px #f59e0b)"></circle>
+                        <circle cx="100" cy="100" r="4" fill="#ffffff"></circle>
+
+                        <defs>
+                            <linearGradient id="radarGradient" x1="0%" y1="100%" x2="0%" y2="0%">
+                                <stop offset="0%" stop-color="#f59e0b" stop-opacity="0"></stop>
+                                <stop offset="100%" stop-color="#f59e0b" stop-opacity="0.8"></stop>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+
+                <div class="w-full flex justify-between text-[10px] font-mono text-slate-500 pt-3 border-t border-slate-800/80 z-10">
+                    <span>Inner: Ring I (Intake)</span>
+                    <span>Outer: Ring IV (Finality)</span>
+                </div>
+            </div>
+
+            <!-- Sovereign Reserve Liquidity Pool (4 cols) -->
+            <div class="lg:col-span-4 glass-panel rounded-2xl p-6 flex flex-col justify-between space-y-5">
                 <div class="flex justify-between items-center">
                     <div>
-                        <span class="text-xs font-semibold tracking-wider text-slate-400 uppercase">Sovereign Reserve Liquidity</span>
-                        <div class="text-xs text-slate-400 mt-0.5">Statutory capital adequacy maintenance pool</div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-slate-300">Sovereign Reserve Liquidity</span>
+                        <div class="text-[11px] text-slate-400 mt-0.5">Pooled Collateral Maintenance</div>
                     </div>
                     <div class="text-right">
                         <span id="reserve-text" class="text-2xl font-mono font-bold text-amber-400">1000.00</span>
@@ -69,153 +176,208 @@
                     </div>
                 </div>
 
-                <!-- Reserve Progress Gauge -->
-                <div class="space-y-1">
-                    <div class="w-full bg-slate-800 h-3 rounded-full overflow-hidden p-0.5 border border-slate-700/50">
-                        <div id="reserve-bar" class="bg-gradient-to-r from-amber-600 to-amber-400 h-full rounded-full transition-all duration-500" style="width: 100%;"></div>
+                <!-- Reserve Progress Bar -->
+                <div class="space-y-2">
+                    <div class="flex justify-between text-[11px] font-mono">
+                        <span class="text-slate-400">Pool Reserve Ratio</span>
+                        <span id="ratio-percentage" class="text-amber-300 font-semibold">100%</span>
                     </div>
-                    <div class="flex justify-between text-[11px] text-slate-400 font-mono">
-                        <span>Deficit Horizon (0 SDR)</span>
-                        <span class="text-amber-500">Statutory Threshold: 250.00 SDR</span>
-                        <span>Full Reserve (1000 SDR)</span>
+                    <div class="w-full bg-slate-950 h-3.5 rounded-full overflow-hidden p-0.5 border border-slate-800 relative">
+                        <div id="reserve-bar" class="bg-gradient-to-r from-amber-600 via-amber-500 to-amber-400 h-full rounded-full transition-all duration-700 shadow-sm shadow-amber-500/50" style="width: 100%;"></div>
+                        <!-- Threshold marker needle -->
+                        <div class="absolute top-0 bottom-0 left-1/4 w-0.5 bg-red-400/80 z-10" title="Statutory Reserve Floor (250 SDR)"></div>
+                    </div>
+                    <div class="flex justify-between text-[10px] text-slate-500 font-mono">
+                        <span>Deficit (0)</span>
+                        <span class="text-amber-500/80 font-semibold">Floor: 250.00 SDR</span>
+                        <span>Max (1000)</span>
                     </div>
                 </div>
 
-                <div class="flex justify-between items-center text-xs border-t border-slate-800/80 pt-3">
-                    <span id="reserve-status-text" class="text-emerald-400 font-medium">Adequacy Margin: ADEQUATE</span>
-                    <button id="btn-reconcile" class="btn btn-outline text-xs px-4 py-1.5 border-amber-600/40 text-amber-300 hover:bg-amber-950/30">
-                        Run Supervisory Reconciliation
+                <!-- Solvency Status Banner -->
+                <div class="p-3 bg-slate-950/70 border border-slate-800 rounded-xl flex justify-between items-center text-xs">
+                    <div class="flex items-center space-x-2">
+                        <span id="reserve-indicator-dot" class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+                        <span id="reserve-status-text" class="font-medium text-emerald-400">Adequacy: ADEQUATE</span>
+                    </div>
+                    <button id="btn-reconcile" class="btn-dark py-1.5 px-3 rounded-lg text-[11px] text-amber-300 font-semibold border-amber-600/30 hover:border-amber-500">
+                        Audit Reconcile ⚖
                     </button>
                 </div>
             </div>
         </section>
 
-        <!-- Concentric Ring Visualizer -->
-        <section class="card p-6 border border-slate-800 rounded-xl bg-slate-900/40">
-            <h2 class="text-sm font-semibold tracking-wider text-slate-300 uppercase mb-4 flex items-center gap-2">
-                <span class="text-amber-400 font-serif">◉</span> Concentric Ring Settlement Sequence
-            </h2>
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div id="ring-1-card" class="ring-card ring-active">
-                    <div class="ring-num">RING I</div>
-                    <div class="ring-title">Attestation & Intake</div>
-                    <p class="ring-desc">Verifies Ed25519 sovereign envelope signature and registers cycle staging.</p>
-                </div>
-                <div id="ring-2-card" class="ring-card">
-                    <div class="ring-num">RING II</div>
-                    <div class="ring-title">Collateral Earmark</div>
-                    <p class="ring-desc">Reserves settlement quantum from sovereign liquidity pool and produces clearance ticket.</p>
-                </div>
-                <div id="ring-3-card" class="ring-card">
-                    <div class="ring-num">RING III</div>
-                    <div class="ring-title">Ledger Mutation</div>
-                    <p class="ring-desc">Executes double-entry journal posting and disburses credit units to channel.</p>
-                </div>
-                <div id="ring-4-card" class="ring-card">
-                    <div class="ring-num">RING IV</div>
-                    <div class="ring-title">Batch Finality</div>
-                    <p class="ring-desc">Seals clearing batch, issues cryptographic certificate, and resets ring buffer.</p>
-                </div>
-            </div>
-        </section>
-
         <!-- Navigation Tabs -->
-        <div class="border-b border-slate-800 flex space-x-8 text-sm font-medium">
-            <button class="tab-btn active pb-3 text-amber-400 border-b-2 border-amber-400" data-tab="tab-operations">Clearing Operations</button>
-            <button class="tab-btn pb-3 text-slate-400 hover:text-slate-200" data-tab="tab-manifest">Treasury Manifest</button>
-            <button class="tab-btn pb-3 text-slate-400 hover:text-slate-200" data-tab="tab-ledger">Double-Entry Journal</button>
-            <button class="tab-btn pb-3 text-slate-400 hover:text-slate-200" data-tab="tab-receipts">Settlement Certificates</button>
-            <button class="tab-btn pb-3 text-slate-400 hover:text-slate-200" data-tab="tab-directory">Institution Directory</button>
+        <div class="border-b border-slate-800/80 flex space-x-2 sm:space-x-8 text-sm font-medium overflow-x-auto">
+            <button class="tab-btn active pb-3 px-1 text-amber-400 border-b-2 border-amber-400 flex items-center gap-2 whitespace-nowrap" data-tab="tab-operations">
+                <span>⚙</span> Ring Operations
+            </button>
+            <button class="tab-btn pb-3 px-1 text-slate-400 hover:text-slate-200 flex items-center gap-2 whitespace-nowrap" data-tab="tab-manifest">
+                <span>📜</span> Sovereign Manifest
+            </button>
+            <button class="tab-btn pb-3 px-1 text-slate-400 hover:text-slate-200 flex items-center gap-2 whitespace-nowrap" data-tab="tab-ledger">
+                <span>📑</span> Double-Entry Journal
+            </button>
+            <button class="tab-btn pb-3 px-1 text-slate-400 hover:text-slate-200 flex items-center gap-2 whitespace-nowrap" data-tab="tab-receipts">
+                <span>🛡</span> Certificates
+            </button>
+            <button class="tab-btn pb-3 px-1 text-slate-400 hover:text-slate-200 flex items-center gap-2 whitespace-nowrap" data-tab="tab-directory">
+                <span>🏛</span> Institution Directory
+            </button>
         </div>
 
         <!-- Tab 1: Operations Console -->
         <section id="tab-operations" class="tab-content space-y-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Action Controls -->
-                <div class="card p-6 border border-slate-800 rounded-xl bg-slate-900/50 space-y-4">
-                    <h3 class="text-sm font-semibold text-slate-300 uppercase tracking-wider">Stepwise Ring Execution</h3>
-                    
-                    <div class="space-y-3">
-                        <div class="p-3 bg-slate-950/60 border border-slate-800/80 rounded-lg flex justify-between items-center">
-                            <div>
-                                <div class="text-xs font-semibold text-slate-200">1. Ingest Manifest (Ring I)</div>
-                                <div class="text-[11px] text-slate-400">Presents signed envelope TX-VYUHA-8841-A</div>
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                
+                <!-- Left: Stepwise Ring Execution Deck (7 cols) -->
+                <div class="lg:col-span-7 glass-panel rounded-2xl p-6 space-y-5">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <h3 class="text-sm font-bold text-slate-200 uppercase tracking-wider">Settlement Ring Sequence</h3>
+                            <p class="text-xs text-slate-400 mt-0.5">Progressive clearing stages for active batch</p>
+                        </div>
+                        <button id="btn-auto-cycle" class="btn-dark py-1.5 px-3 rounded-lg text-xs font-semibold text-amber-300 border-amber-500/40 hover:bg-amber-950/40 flex items-center gap-1.5">
+                            <span>▶</span> Auto-Run Cycle
+                        </button>
+                    </div>
+
+                    <div class="space-y-3.5">
+                        <!-- Ring 1 Card -->
+                        <div id="step-ring-1" class="step-card active p-4">
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-8 h-8 rounded-lg bg-amber-500/10 border border-amber-500/40 flex items-center justify-center font-serif font-bold text-amber-400 text-xs">
+                                        I
+                                    </div>
+                                    <div>
+                                        <div class="text-xs font-bold text-slate-200">Ring I: Ingest Sovereign Manifest</div>
+                                        <div class="text-[11px] text-slate-400">Presents Ed25519-signed instruction TX-VYUHA-8841-A</div>
+                                    </div>
+                                </div>
+                                <button id="btn-action-intake" class="btn-gold py-1.5 px-4 rounded-lg text-xs">
+                                    Submit Intake
+                                </button>
                             </div>
-                            <button id="btn-action-intake" class="btn btn-secondary text-xs px-3 py-1.5">Submit Intake</button>
                         </div>
 
-                        <div class="p-3 bg-slate-950/60 border border-slate-800/80 rounded-lg flex justify-between items-center">
-                            <div>
-                                <div class="text-xs font-semibold text-slate-200">2. Earmark Collateral (Ring II)</div>
-                                <div id="ticket-preview" class="text-[11px] text-slate-400 font-mono">Ticket: None</div>
+                        <!-- Ring 2 Card -->
+                        <div id="step-ring-2" class="step-card p-4">
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-8 h-8 rounded-lg bg-slate-800 border border-slate-700 flex items-center justify-center font-serif font-bold text-slate-400 text-xs">
+                                        II
+                                    </div>
+                                    <div>
+                                        <div class="text-xs font-bold text-slate-200">Ring II: Earmark Collateral</div>
+                                        <div id="ticket-preview" class="text-[11px] text-slate-400 font-mono">Ticket: None</div>
+                                    </div>
+                                </div>
+                                <button id="btn-action-earmark" class="btn-dark py-1.5 px-4 rounded-lg text-xs font-semibold" disabled>
+                                    Earmark Pool
+                                </button>
                             </div>
-                            <button id="btn-action-earmark" class="btn btn-secondary text-xs px-3 py-1.5" disabled>Earmark Pool</button>
                         </div>
 
-                        <div class="p-3 bg-slate-950/60 border border-slate-800/80 rounded-lg flex justify-between items-center">
-                            <div>
-                                <div class="text-xs font-semibold text-slate-200">3. Disburse Settlement (Ring III)</div>
-                                <div id="voucher-preview" class="text-[11px] text-slate-400 font-mono">Voucher: None</div>
+                        <!-- Ring 3 Card -->
+                        <div id="step-ring-3" class="step-card p-4">
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-8 h-8 rounded-lg bg-slate-800 border border-slate-700 flex items-center justify-center font-serif font-bold text-slate-400 text-xs">
+                                        III
+                                    </div>
+                                    <div>
+                                        <div class="text-xs font-bold text-slate-200">Ring III: Ledger Journal Mutation</div>
+                                        <div id="voucher-preview" class="text-[11px] text-slate-400 font-mono">Voucher: None</div>
+                                    </div>
+                                </div>
+                                <button id="btn-action-disburse" class="btn-dark py-1.5 px-4 rounded-lg text-xs font-semibold" disabled>
+                                    Disburse 150 SDR
+                                </button>
                             </div>
-                            <button id="btn-action-disburse" class="btn btn-secondary text-xs px-3 py-1.5" disabled>Disburse</button>
                         </div>
 
-                        <div class="p-3 bg-slate-950/60 border border-slate-800/80 rounded-lg flex justify-between items-center">
-                            <div>
-                                <div class="text-xs font-semibold text-slate-200">4. Finalize Batch (Ring IV)</div>
-                                <div class="text-[11px] text-slate-400">Issues certificate & advances clearing cycle</div>
+                        <!-- Ring 4 Card -->
+                        <div id="step-ring-4" class="step-card p-4">
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-8 h-8 rounded-lg bg-slate-800 border border-slate-700 flex items-center justify-center font-serif font-bold text-slate-400 text-xs">
+                                        IV
+                                    </div>
+                                    <div>
+                                        <div class="text-xs font-bold text-slate-200">Ring IV: Seal Batch & Finalize</div>
+                                        <div class="text-[11px] text-slate-400">Issues certificate, resets stage buffer & increments cycle</div>
+                                    </div>
+                                </div>
+                                <button id="btn-action-finalize" class="btn-dark py-1.5 px-4 rounded-lg text-xs font-semibold" disabled>
+                                    Finalize Batch
+                                </button>
                             </div>
-                            <button id="btn-action-finalize" class="btn btn-secondary text-xs px-3 py-1.5" disabled>Finalize</button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Console Output & Telemetry -->
-                <div class="card p-6 border border-slate-800 rounded-xl bg-slate-900/50 flex flex-col">
-                    <div class="flex justify-between items-center mb-2">
-                        <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Gateway Protocol Log</span>
-                        <button id="btn-clear-log" class="text-[11px] text-slate-500 hover:text-slate-300">Clear</button>
+                <!-- Right: Protocol Event Log (5 cols) -->
+                <div class="lg:col-span-5 glass-panel rounded-2xl p-6 flex flex-col justify-between space-y-4">
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs font-bold uppercase tracking-wider text-slate-300 flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400"></span> Live Protocol Journal
+                        </span>
+                        <button id="btn-clear-log" class="text-[11px] text-slate-500 hover:text-slate-300 font-mono">
+                            Clear Output
+                        </button>
                     </div>
-                    <pre id="console-output" class="font-mono text-xs text-slate-300 bg-slate-950 p-4 rounded-lg flex-1 overflow-auto max-h-80 border border-slate-800 select-all"></pre>
+                    <pre id="console-output" class="font-mono text-[11px] text-slate-300 bg-slate-950 p-4 rounded-xl flex-1 overflow-auto max-h-96 border border-slate-800/80 select-all"></pre>
+                    <div class="text-[11px] text-slate-500 font-mono flex justify-between">
+                        <span>Gateway: Connected</span>
+                        <span id="log-count">0 events</span>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Tab 2: Manifest Inspector -->
+        <!-- Tab 2: Sovereign Manifest -->
         <section id="tab-manifest" class="tab-content hidden space-y-4">
-            <div class="card p-6 border border-slate-800 rounded-xl bg-slate-900/50 space-y-4">
+            <div class="glass-panel rounded-2xl p-6 space-y-4">
                 <div class="flex justify-between items-center">
                     <div>
-                        <h3 class="text-sm font-semibold text-slate-300 uppercase tracking-wider">Treasury Attested Manifest</h3>
-                        <p class="text-xs text-slate-400">Pre-authorized sovereign liquidity disbursement envelope</p>
+                        <h3 class="text-sm font-bold text-slate-200 uppercase tracking-wider">Treasury Sovereign Manifest</h3>
+                        <p class="text-xs text-slate-400">Cryptographically attested liquidity envelope signed by authority</p>
                     </div>
-                    <button id="btn-copy-manifest" class="btn btn-secondary text-xs px-3 py-1.5">Copy Raw Payload</button>
+                    <button id="btn-copy-manifest" class="btn-dark py-1.5 px-3.5 rounded-lg text-xs font-semibold text-amber-300 flex items-center gap-1.5">
+                        <span>📋</span> Copy Raw JSON
+                    </button>
                 </div>
-                <pre id="manifest-viewer" class="font-mono text-xs text-amber-200/90 bg-slate-950 p-4 rounded-lg overflow-auto max-h-96 border border-slate-800"></pre>
+                <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 font-mono text-xs text-amber-200/90 overflow-x-auto">
+                    <pre id="manifest-viewer">Loading manifest...</pre>
+                </div>
             </div>
         </section>
 
-        <!-- Tab 3: Ledger Journal -->
+        <!-- Tab 3: Double-Entry Journal -->
         <section id="tab-ledger" class="tab-content hidden space-y-4">
-            <div class="card p-6 border border-slate-800 rounded-xl bg-slate-900/50 space-y-4">
-                <div class="flex justify-between items-center">
-                    <h3 class="text-sm font-semibold text-slate-300 uppercase tracking-wider">Double-Entry Journal Postings</h3>
-                    <input type="text" id="ledger-search" placeholder="Search journal ID or voucher..." class="bg-slate-950 border border-slate-800 rounded px-3 py-1 text-xs text-slate-200">
+            <div class="glass-panel rounded-2xl p-6 space-y-4">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                    <div>
+                        <h3 class="text-sm font-bold text-slate-200 uppercase tracking-wider">Posted Journal Ledger</h3>
+                        <p class="text-xs text-slate-400">Immutable double-entry debits and credits recorded across cycles</p>
+                    </div>
+                    <input type="text" id="ledger-search" placeholder="Search journal ID or voucher..." class="bg-slate-950 border border-slate-800 rounded-lg px-3 py-1.5 text-xs text-slate-200 w-full sm:w-64 focus:outline-none focus:border-amber-500/60 font-mono">
                 </div>
-                <div class="overflow-x-auto">
+                <div class="overflow-x-auto rounded-xl border border-slate-800">
                     <table class="w-full text-left text-xs text-slate-300">
-                        <thead class="bg-slate-950/80 text-slate-400 font-mono border-b border-slate-800">
+                        <thead class="bg-slate-950 text-slate-400 font-mono border-b border-slate-800">
                             <tr>
-                                <th class="p-3">Journal Ref</th>
-                                <th class="p-3">Cycle</th>
-                                <th class="p-3">Voucher Ref</th>
-                                <th class="p-3">Units</th>
-                                <th class="p-3">Time</th>
-                                <th class="p-3">Checksum</th>
+                                <th class="p-3.5">Journal Ref</th>
+                                <th class="p-3.5">Cycle</th>
+                                <th class="p-3.5">Voucher Ref</th>
+                                <th class="p-3.5">Disbursed Units</th>
+                                <th class="p-3.5">Posted Time</th>
+                                <th class="p-3.5">Checksum Hash</th>
                             </tr>
                         </thead>
                         <tbody id="ledger-table-body" class="divide-y divide-slate-800/60 font-mono">
-                            <tr><td colspan="6" class="p-4 text-center text-slate-500">No journal postings recorded</td></tr>
+                            <tr><td colspan="6" class="p-6 text-center text-slate-500">No journal postings recorded in active channel</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -224,31 +386,39 @@
 
         <!-- Tab 4: Settlement Certificates -->
         <section id="tab-receipts" class="tab-content hidden space-y-4">
-            <div class="card p-6 border border-slate-800 rounded-xl bg-slate-900/50 space-y-4">
-                <h3 class="text-sm font-semibold text-slate-300 uppercase tracking-wider">Issued Settlement Certificates</h3>
-                <div class="overflow-x-auto">
+            <div class="glass-panel rounded-2xl p-6 space-y-4">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h3 class="text-sm font-bold text-slate-200 uppercase tracking-wider">Sealed Settlement Certificates</h3>
+                        <p class="text-xs text-slate-400">Cryptographically signed batch completion receipts</p>
+                    </div>
+                </div>
+                <div class="overflow-x-auto rounded-xl border border-slate-800">
                     <table class="w-full text-left text-xs text-slate-300">
-                        <thead class="bg-slate-950/80 text-slate-400 font-mono border-b border-slate-800">
+                        <thead class="bg-slate-950 text-slate-400 font-mono border-b border-slate-800">
                             <tr>
-                                <th class="p-3">Certificate ID</th>
-                                <th class="p-3">Cycle</th>
-                                <th class="p-3">Cleared SDR</th>
-                                <th class="p-3">Timestamp</th>
-                                <th class="p-3">Integrity Seal</th>
+                                <th class="p-3.5">Certificate ID</th>
+                                <th class="p-3.5">Cycle Cleared</th>
+                                <th class="p-3.5">Total SDR Cleared</th>
+                                <th class="p-3.5">Sealed Timestamp</th>
+                                <th class="p-3.5">Integrity Seal</th>
                             </tr>
                         </thead>
                         <tbody id="receipts-table-body" class="divide-y divide-slate-800/60 font-mono">
-                            <tr><td colspan="5" class="p-4 text-center text-slate-500">No batch certificates sealed</td></tr>
+                            <tr><td colspan="5" class="p-6 text-center text-slate-500">No batch certificates sealed yet</td></tr>
                         </tbody>
                     </table>
                 </div>
             </div>
         </section>
 
-        <!-- Tab 5: Routing Directory -->
+        <!-- Tab 5: Institution Directory -->
         <section id="tab-directory" class="tab-content hidden space-y-4">
-            <div class="card p-6 border border-slate-800 rounded-xl bg-slate-900/50 space-y-4">
-                <h3 class="text-sm font-semibold text-slate-300 uppercase tracking-wider">Sovereign Clearing Directory</h3>
+            <div class="glass-panel rounded-2xl p-6 space-y-4">
+                <div>
+                    <h3 class="text-sm font-bold text-slate-200 uppercase tracking-wider">Sovereign Clearing Directory</h3>
+                    <p class="text-xs text-slate-400">Recognized routing members and clearing nodes</p>
+                </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="directory-grid">
                     <!-- Loaded dynamically -->
                 </div>
@@ -256,19 +426,25 @@
         </section>
     </main>
 
-    <!-- Modal for Supervisory Alerts / Attestation -->
-    <div id="modal-container" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
-        <div class="bg-slate-900 border border-slate-700 max-w-lg w-full rounded-xl p-6 space-y-4 shadow-2xl">
+    <!-- Modal for Supervisory Alerts / Attestation Anchor -->
+    <div id="modal-container" class="fixed inset-0 bg-slate-950/85 backdrop-blur-md z-50 flex items-center justify-center hidden p-4 transition-all">
+        <div class="glass-panel max-w-lg w-full rounded-2xl p-6 space-y-4 shadow-2xl border-amber-500/40">
             <div class="flex justify-between items-center border-b border-slate-800 pb-3">
-                <h4 id="modal-title" class="text-sm font-serif font-bold text-amber-300 tracking-wider">SUPERVISORY ASSESSMENT</h4>
-                <button id="modal-close" class="text-slate-400 hover:text-slate-200">✕</button>
+                <div class="flex items-center space-x-2">
+                    <span class="text-amber-400 font-serif text-lg">⚖</span>
+                    <h4 id="modal-title" class="text-sm font-serif font-bold text-amber-200 tracking-wider uppercase">SUPERVISORY ASSESSMENT</h4>
+                </div>
+                <button id="modal-close" class="text-slate-400 hover:text-slate-200 p-1">✕</button>
             </div>
-            <div id="modal-body" class="font-mono text-xs text-slate-300 space-y-2 max-h-96 overflow-auto"></div>
+            <div id="modal-body" class="font-mono text-xs text-slate-300 space-y-3 max-h-96 overflow-auto"></div>
             <div class="pt-2 text-right">
-                <button id="modal-ok" class="btn btn-secondary text-xs px-4 py-1.5">Acknowledge</button>
+                <button id="modal-ok" class="btn-dark py-2 px-5 rounded-xl text-xs font-semibold text-slate-200">Close</button>
             </div>
         </div>
     </div>
+
+    <!-- Floating Toast Notification Container -->
+    <div id="toast-container"></div>
 
     <script src="/static/app.js"></script>
 </body>
