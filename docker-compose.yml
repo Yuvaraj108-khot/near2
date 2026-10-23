@@ -1,0 +1,9 @@
+services:
+  chakravyuh-gateway:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - SETTLEMENT_ATTESTATION_SEAL=CHAKRAVYUHA{s4pt4r4th4_cl34r1ng_st4t3_d3sync_x891b}
+      - DB_PATH=/tmp/settlement.db
+    restart: unless-stopped

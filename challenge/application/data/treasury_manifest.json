@@ -1,0 +1,15 @@
+{
+  "manifest": {
+    "protocol": "CSP-v4.2",
+    "instruction_ref": "TX-VYUHA-8841-A",
+    "origin_vault": "urn:vyuha:vault:primary",
+    "beneficiary": "urn:vyuha:channel:participant",
+    "quantum": 150.0,
+    "currency": "SDR",
+    "routing_tier": "RING-ALPHA",
+    "valid_until": 1924905600,
+    "authorization_domain": "CHAKRA-SETTLEMENT-ZONE"
+  },
+  "authority_key": "f49b7cbd039028f45804d5829370848e1fe3413782d8c0d860209ad3de81f161",
+  "signature": "a51f135200239d484d8e6d2c74557472e19ef38a8fd58887e8b7c20681be5a8140e6c56d29d4789eebec9bd104746eda1230f5361f95b10487b5ed614908df07"
+}
