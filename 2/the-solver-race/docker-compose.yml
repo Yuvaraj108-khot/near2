@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  solver-race:
+    build: .
+    container_name: solver_race_challenge
+    ports:
+      - "8000:8000"
+    environment:
+      - FLAG=CHAKRAVYUHA{x_l4y3r_st4t3_1d3nt1ty_r3c0nc1l3_8f19}
+      - SECRET_KEY=clearing-sov-mesh-session-key-8891
+    restart: unless-stopped

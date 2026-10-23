@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Solver Race — Settlement Operations Console</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <!-- Header -->
+        <header class="top-nav">
+            <div class="brand">
+                <div class="logo-icon"></div>
+                <div>
+                    <div class="brand-title">THE SOLVER RACE</div>
+                    <div class="brand-subtitle">High-Assurance Clearing & Settlement Venue</div>
+                </div>
+            </div>
+
+            <div class="top-metrics" id="topMetrics" style="display: none;">
+                <div class="metric-card">
+                    <span class="metric-label">SOLVER ID</span>
+                    <span class="metric-val mono" id="dispAccountId">—</span>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-label">CREDITED BALANCE</span>
+                    <span class="metric-val mono highlight" id="dispBalance">0.00 CR</span>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-label">POOL RESERVE</span>
+                    <span class="metric-val mono" id="dispReserve">1500.00 CR</span>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-label">SOLVENCY STATUS</span>
+                    <span class="badge badge-success" id="dispSolvencyStatus">COMPLIANT</span>
+                </div>
+                <button class="btn btn-secondary btn-sm" onclick="resetSession()">Reset Session</button>
+            </div>
+        </header>
+
+        <!-- Registration Banner (if unauthenticated) -->
+        <section id="authSection" class="auth-section">
+            <div class="auth-box">
+                <h2>Initialize Solver Session</h2>
+                <p>Register your algorithmic solver node to receive isolated settlement clearing channels and allocated pool reserves.</p>
+                <div class="form-group">
+                    <label>Solver Node Identifier</label>
+                    <input type="text" id="solverNameInput" placeholder="e.g. Apex-Solvers-Node-1" value="Titan-Solver-1">
+                </div>
+                <button class="btn btn-primary" onclick="registerSolver()">Open Clearing Channel</button>
+                <div class="auth-divider">OR</div>
+                <div class="form-group">
+                    <label>Resume Existing Session Token</label>
+                    <input type="text" id="resumeTokenInput" placeholder="slv_sec_...">
+                </div>
+                <button class="btn btn-secondary" onclick="resumeSession()">Resume Session</button>
+            </div>
+        </section>
+
+        <!-- Main Console Layout -->
+        <main id="mainConsole" class="main-console" style="display: none;">
+            <!-- Tabs Navigation -->
+            <nav class="console-tabs">
+                <button class="tab-btn active" onclick="switchTab('orders')">1. Market Orders</button>
+                <button class="tab-btn" onclick="switchTab('quotes')">2. Quotes & Revisions</button>
+                <button class="tab-btn" onclick="switchTab('settlements')">3. Settlements</button>
+                <button class="tab-btn" onclick="switchTab('receipts')">4. Receipts</button>
+                <button class="tab-btn" onclick="switchTab('ledger')">5. General Ledger</button>
+                <button class="tab-btn" onclick="switchTab('reconciliation')">6. Supervisory Audit</button>
+            </nav>
+
+            <!-- Tab 1: Orders -->
+            <section id="tab-orders" class="tab-pane active">
+                <div class="pane-header">
+                    <h3>Active Institutional Settlement Demands</h3>
+                    <button class="btn btn-secondary btn-sm" onclick="loadOrders()">Refresh Orders</button>
+                </div>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Currency Pair</th>
+                                <th>Nominal Size</th>
+                                <th>Target Rate</th>
+                                <th>Target Fee (bps)</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ordersTableBody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Tab 2: Quotes -->
+            <section id="tab-quotes" class="tab-pane">
+                <div class="pane-header">
+                    <h3>Standing Solver Quotes & Revision History</h3>
+                    <button class="btn btn-secondary btn-sm" onclick="loadQuotes()">Refresh Quotes</button>
+                </div>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Quote ID</th>
+                                <th>Order ID</th>
+                                <th>Active Revision</th>
+                                <th>Quote Reference</th>
+                                <th>Offered Rate</th>
+                                <th>Spread (bps)</th>
+                                <th>Payout Allocation</th>
+                                <th>State</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="quotesTableBody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Tab 3: Settlements -->
+            <section id="tab-settlements" class="tab-pane">
+                <div class="pane-header">
+                    <h3>Settlement Execution Queue</h3>
+                    <button class="btn btn-secondary btn-sm" onclick="loadSettlements()">Refresh Settlements</button>
+                </div>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Settlement ID</th>
+                                <th>Order ID</th>
+                                <th>Quote Reference</th>
+                                <th>Settlement Identity</th>
+                                <th>Disbursed Quantum</th>
+                                <th>State</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="settlementsTableBody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Tab 4: Receipts -->
+            <section id="tab-receipts" class="tab-pane">
+                <div class="pane-header">
+                    <h3>Cryptographic Clearance Receipts</h3>
+                    <button class="btn btn-secondary btn-sm" onclick="loadReceipts()">Refresh Receipts</button>
+                </div>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Receipt ID</th>
+                                <th>Root Quote ID</th>
+                                <th>Order ID</th>
+                                <th>Receipt Identity Key</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Issued Timestamp</th>
+                            </tr>
+                        </thead>
+                        <tbody id="receiptsTableBody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Tab 5: Ledger -->
+            <section id="tab-ledger" class="tab-pane">
+                <div class="pane-header">
+                    <h3>Posted Double-Entry Journal Records</h3>
+                    <button class="btn btn-secondary btn-sm" onclick="loadLedger()">Refresh Ledger</button>
+                </div>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Journal ID</th>
+                                <th>Settlement ID</th>
+                                <th>Quote Reference</th>
+                                <th>Debit Account</th>
+                                <th>Credit Account</th>
+                                <th>Amount</th>
+                                <th>Reserve Balance After</th>
+                                <th>Posted At</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ledgerTableBody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Tab 6: Reconciliation -->
+            <section id="tab-reconciliation" class="tab-pane">
+                <div class="pane-header">
+                    <h3>Supervisory Capital & Solvency Reconciliation</h3>
+                    <button class="btn btn-primary btn-sm" onclick="triggerAudit()">Execute End-of-Cycle Audit</button>
+                </div>
+                <div class="audit-dashboard">
+                    <div class="audit-card">
+                        <div class="audit-row">
+                            <span>Initial Channel Reserve:</span>
+                            <span class="mono">1500.00 CR</span>
+                        </div>
+                        <div class="audit-row">
+                            <span>Current Reserve Balance:</span>
+                            <span class="mono" id="auditReserve">1500.00 CR</span>
+                        </div>
+                        <div class="audit-row">
+                            <span>Statutory Solvency Floor:</span>
+                            <span class="mono">500.00 CR</span>
+                        </div>
+                        <div class="audit-row">
+                            <span>Total Disbursed Volume:</span>
+                            <span class="mono" id="auditDisbursed">0.00 CR</span>
+                        </div>
+                        <div class="audit-row">
+                            <span>Solvency Classification:</span>
+                            <span class="badge badge-success" id="auditStatus">COMPLIANT</span>
+                        </div>
+                    </div>
+
+                    <div class="certificate-viewer" id="certificateViewer">
+                        <h4>Supervisory Certificate Stream</h4>
+                        <pre id="certificateOutput" class="mono-box">// Run audit to generate supervisory clearance or resolution certificate...</pre>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Quote Modal -->
+        <div id="quoteModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="modalTitle">Submit Settlement Quote</h3>
+                    <span class="close" onclick="closeModal('quoteModal')">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="modalOrderId">
+                    <div class="form-group">
+                        <label>Target Rate</label>
+                        <input type="number" step="0.0001" id="modalRate" placeholder="e.g. 1.0500">
+                    </div>
+                    <div class="form-group">
+                        <label>Spread Rebate (basis points)</label>
+                        <input type="number" id="modalSpread" placeholder="e.g. 180">
+                    </div>
+                    <div class="form-group">
+                        <label>Allocation Ratio (%)</label>
+                        <input type="number" id="modalAlloc" placeholder="100.0" value="100.0">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" onclick="closeModal('quoteModal')">Cancel</button>
+                    <button class="btn btn-primary" onclick="submitQuote()">Submit Quote</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Adjust Modal -->
+        <div id="adjustModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Adjust Standing Quote Parameters</h3>
+                    <span class="close" onclick="closeModal('adjustModal')">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="adjustQuoteId">
+                    <p class="text-muted">Revising a quote recalibrates rate and spread parameters and issues a new revision ticket.</p>
+                    <div class="form-group">
+                        <label>Rate Delta</label>
+                        <input type="number" step="0.001" id="adjustRateDelta" value="0.010">
+                    </div>
+                    <div class="form-group">
+                        <label>Spread Delta (bps)</label>
+                        <input type="number" id="adjustSpreadDelta" value="20">
+                    </div>
+                    <div class="form-group">
+                        <label>Allocation (%)</label>
+                        <input type="number" id="adjustAlloc" value="100.0">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" onclick="closeModal('adjustModal')">Cancel</button>
+                    <button class="btn btn-primary" onclick="submitAdjustment()">Commit Revision</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
